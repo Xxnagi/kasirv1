@@ -11,6 +11,26 @@ if (isset($_SESSION['cart'])) {
     }
 }
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['qty'], $_POST['id_barang'])) {
+        $idBarang = intval($_POST['id_barang']); // Ambil ID barang dari form
+        $quantity = intval($_POST['qty']); // Ambil jumlah barang dari form
+
+        // Memanggil stored procedure
+        $sql = "CALL kurangiStokBarang($idBarang, $quantity)";
+
+        // Eksekusi query
+        if ($dbconnect->query($sql) === TRUE) {
+            echo "Stok barang berhasil diperbarui.";
+        } else {
+            echo "Error: " . $sql . "<br>" . $dbconnect->error;
+        }
+    } else {
+        echo "Jumlah barang atau ID barang tidak tersedia.";
+    }
+}
+
+
 ?>
 
 <!DOCTYPE html>

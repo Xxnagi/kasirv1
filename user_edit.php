@@ -13,8 +13,7 @@ if (isset($_GET['id'])) {
     $data = mysqli_fetch_assoc($data);
 }
 
-if(isset($_POST['update']))
-{
+if (isset($_POST['update'])) {
     $id = $_GET['id'];
 
     $nama = $_POST['nama'];
@@ -23,53 +22,57 @@ if(isset($_POST['update']))
     $role_id = $_POST['role_id'];
 
     //menyimpan ke database
-        // Menyimpan ke database;
-        mysqli_query($dbconnect, "UPDATE user SET nama='$nama', username='$username', password='$password', role_id='$role_id' where id_user = '$id' ");
+    // Menyimpan ke database;
+    mysqli_query($dbconnect, "UPDATE user SET nama='$nama', username='$username', password='$password', role_id='$role_id' where id_user = '$id' ");
 
-        $_SESSION['success'] = 'Berhasil Memperbaruhi Data';
+    $_SESSION['success'] = 'Berhasil Memperbaruhi Data';
 
-        // Mengalihkan halaman ke list barang
-        header("location:user.php");
+    // Mengalihkan halaman ke list barang
+    header("location:user.php");
 }
 
 ?>
 <!DOCTYPE html>
-<html> 
+<html>
+
 <head>
     <title>Tambah User</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
+
 <body>
-<div class="container">
-    <h1>Tambah User</h1>
-    <form method="post">
-        <div class="form-group">
-            <label>Nama</label>
-            <input type="text" name="nama" class="form-control" placeholder="Nama User" value="<?=$data['nama']?>">
-        </div>
-        <div class="form-group">
-            <label>Username</label>
-            <input type="text" name="username" class="form-control" placeholder="Username" value="<?=$data['username']?>">
-        </div>
-        <div class="form-group">
-            <label>Password</label>
-            <input type="text" name="password" class="form-control" placeholder="Password" value="<?=$data['password']?>">
-        </div>
-        <div class="form-group">
-            <label>Role Akses</label>
-            <select class="form-control" name="role_id">
-                <option value="">Pilih Role Akses</option>
+    <?php include 'navbar.php'; ?>
+    <div class="container">
+        <h1>Tambah User</h1>
+        <form method="post">
+            <div class="form-group">
+                <label>Nama</label>
+                <input type="text" name="nama" class="form-control" placeholder="Nama User" value="<?= $data['nama'] ?>">
+            </div>
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" name="username" class="form-control" placeholder="Username" value="<?= $data['username'] ?>">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="text" name="password" class="form-control" placeholder="Password" value="<?= $data['password'] ?>">
+            </div>
+            <div class="form-group">
+                <label>Role Akses</label>
+                <select class="form-control" name="role_id">
+                    <option value="">Pilih Role Akses</option>
 
-            <?php while($row = mysqli_fetch_array($role)){?>
+                    <?php while ($row = mysqli_fetch_array($role)) { ?>
 
-                <option value="<?=$row['id_role']?>" <?=$row['id_role']==$data['role_id']?'selected':''?> ><?=$row['nama']?></option>
+                        <option value="<?= $row['id_role'] ?>" <?= $row['id_role'] == $data['role_id'] ? 'selected' : '' ?>><?= $row['nama'] ?></option>
 
-            <?php } ?>
-            </select>
-        </div>
-    <input type="submit" name="update" value="Perbaruhi" class="btn btn-primary">
-    <a href="/kasirv1/user.php" class="btn btn-warning">Kembali</a>
-    </form>
-</div>
+                    <?php } ?>
+                </select>
+            </div>
+            <input type="submit" name="update" value="Perbaruhi" class="btn btn-primary">
+            <a href="/kasirv1/user.php" class="btn btn-warning">Kembali</a>
+        </form>
+    </div>
 </body>
+
 </html>
